@@ -1,0 +1,68 @@
+{% extends 'store/base.html' %}
+{% block title %}Products — SimpleStore{% endblock %}
+
+{% block content %}
+
+<section class="section-wrap">
+  <div class="pl-header">
+    <div>
+      <div class="section-label">Catalogue</div>
+      <h1 class="section-title">All Products</h1>
+    </div>
+    <p class="pl-count">
+      <i class="fa-solid fa-layer-group"></i>
+      {{ products|length }} item{{ products|length|pluralize }}
+    </p>
+  </div>
+
+  <div class="product-grid stagger-grid">
+    {% for product in products %}
+    <article class="pcard">
+      <div class="pcard-image-wrap">
+        {% if product.image_url %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="pcard-img"/>
+        {% endif %}
+        {% if product.badge %}
+        <span class="pcard-badge">{{ product.badge }}</span>
+        {% endif %}
+        <div class="pcard-overlay">
+          <a href="{% url 'add_to_cart' product.id %}" class="overlay-add-btn">
+            <i class="fa-solid fa-bag-shopping"></i> Quick Add
+          </a>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <p class="pcard-name">{{ product.name }}</p>
+        <p class="pcard-desc">{{ product.description|truncatechars:70 }}</p>
+        <div class="pcard-foot">
+          <span class="pcard-price">${{ product.price }}</span>
+          <a href="{% url 'add_to_cart' product.id %}" class="pcard-btn">
+            <i class="fa-solid fa-bag-shopping"></i> Add
+          </a>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <div class="empty-state">
+      <i class="fa-solid fa-box-open"></i>
+      <p>No products available yet.</p>
+      <a href="/admin/store/product/add/" class="cta-primary">Add in Admin</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  const cards = document.querySelectorAll('.stagger-grid .pcard');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  cards.forEach(c => obs.observe(c));
+</script>
+
+{% endblock %}

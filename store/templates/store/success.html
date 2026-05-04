@@ -1,0 +1,68 @@
+{% extends 'store/base.html' %}
+{% block title %}Order Confirmed — SimpleStore{% endblock %}
+
+{% block content %}
+
+<section class="success-section">
+  <div class="success-card">
+
+    <div class="success-ring-outer">
+      <div class="success-ring-inner">
+        <i class="fa-solid fa-circle-check success-check-icon"></i>
+      </div>
+    </div>
+
+    <div class="success-label">Order Confirmed</div>
+    <h1 class="success-title">Thank you for<br><em>shopping with us.</em></h1>
+    <p class="success-desc">
+      We've received your order and will be in touch shortly
+      to confirm delivery details.
+    </p>
+
+    <div class="success-timeline">
+      <div class="timeline-step done">
+        <div class="tl-dot"><i class="fa-solid fa-check"></i></div>
+        <div class="tl-info">
+          <strong>Order Received</strong>
+          <span>Just now</span>
+        </div>
+      </div>
+      <div class="timeline-connector"></div>
+      <div class="timeline-step active">
+        <div class="tl-dot pulse"><i class="fa-solid fa-phone"></i></div>
+        <div class="tl-info">
+          <strong>Confirmation Call</strong>
+          <span>Within 2 hours</span>
+        </div>
+      </div>
+      <div class="timeline-connector"></div>
+      <div class="timeline-step">
+        <div class="tl-dot"><i class="fa-solid fa-box"></i></div>
+        <div class="tl-info">
+          <strong>Order Packed</strong>
+          <span>Within 24 hours</span>
+        </div>
+      </div>
+      <div class="timeline-connector"></div>
+      <div class="timeline-step">
+        <div class="tl-dot"><i class="fa-solid fa-truck-fast"></i></div>
+        <div class="tl-info">
+          <strong>Delivered</strong>
+          <span>Within 48 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-actions">
+      <a href="{% url 'homepage' %}" class="cta-primary">
+        <i class="fa-solid fa-house"></i> Back to Home
+      </a>
+      <a href="{% url 'product_list' %}" class="cta-ghost">
+        Shop More <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
