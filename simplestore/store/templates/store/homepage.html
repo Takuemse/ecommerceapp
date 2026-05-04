@@ -1,0 +1,219 @@
+{% extends 'store/base.html' %}
+{% block title %}SimpleStore — Home{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">
+      <span class="hero-label-dot"></span>
+      New Collection — 2024
+    </div>
+    <h1 class="hero-title">
+      Shop<br><em>Without</em><br>The Noise.
+    </h1>
+    <p class="hero-desc">
+      Handpicked products. No dark patterns. No fake urgency.
+      Just great things at honest prices.
+    </p>
+    <div class="hero-cta-row">
+      <a href="{% url 'product_list' %}" class="cta-primary">
+        Explore Products
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <a href="{% url 'cart' %}" class="cta-secondary">
+        View Cart
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>Secure checkout</span>
+      </div>
+      <div class="trust-item">
+        <i class="fa-solid fa-rotate-left"></i>
+        <span>Free returns</span>
+      </div>
+      <div class="trust-item">
+        <i class="fa-solid fa-truck-fast"></i>
+        <span>48h delivery</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-frame">
+      <img
+        src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
+        alt="Store hero"
+        class="hero-image"
+      />
+      <div class="hero-img-badge">
+        <i class="fa-solid fa-star"></i>
+        <div>
+          <strong>4.9</strong>
+          <span>2,400+ reviews</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="marquee-strip">
+  <div class="marquee-track">
+    <span>Free delivery over $50</span>
+    <span class="marquee-dot"></span>
+    <span>New arrivals every week</span>
+    <span class="marquee-dot"></span>
+    <span>Hassle-free returns</span>
+    <span class="marquee-dot"></span>
+    <span>Secure encrypted checkout</span>
+    <span class="marquee-dot"></span>
+    <span>Free delivery over $50</span>
+    <span class="marquee-dot"></span>
+    <span>New arrivals every week</span>
+    <span class="marquee-dot"></span>
+    <span>Hassle-free returns</span>
+    <span class="marquee-dot"></span>
+    <span>Secure encrypted checkout</span>
+    <span class="marquee-dot"></span>
+  </div>
+</section>
+
+<section class="section-wrap">
+  <div class="section-label">Featured Products</div>
+  <div class="section-header-row">
+    <h2 class="section-title">Curated for You</h2>
+    <a href="{% url 'product_list' %}" class="link-arrow">
+      View all <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+
+  <div class="product-grid stagger-grid">
+    {% for product in featured %}
+    <article class="pcard">
+      <div class="pcard-image-wrap">
+        {% if product.image_url %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="pcard-img"/>
+        {% endif %}
+        {% if product.badge %}
+        <span class="pcard-badge">{{ product.badge }}</span>
+        {% endif %}
+        <div class="pcard-overlay">
+          <a href="{% url 'add_to_cart' product.id %}" class="overlay-add-btn">
+            <i class="fa-solid fa-bag-shopping"></i> Quick Add
+          </a>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <p class="pcard-name">{{ product.name }}</p>
+        <p class="pcard-desc">{{ product.description|truncatechars:55 }}</p>
+        <div class="pcard-foot">
+          <span class="pcard-price">${{ product.price }}</span>
+          <a href="{% url 'add_to_cart' product.id %}" class="pcard-btn">
+            <i class="fa-solid fa-plus"></i>
+          </a>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <p class="muted-note">No products yet — add some from the admin panel.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="pillars-section">
+  <div class="pillars-inner">
+    <div class="pillar">
+      <div class="pillar-icon-wrap">
+        <i class="fa-solid fa-truck-fast"></i>
+      </div>
+      <h3>Fast Delivery</h3>
+      <p>Orders dispatched same day. Tracked every step of the way.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon-wrap">
+        <i class="fa-solid fa-gem"></i>
+      </div>
+      <h3>Premium Quality</h3>
+      <p>Every product is hand-reviewed before it enters the catalogue.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon-wrap">
+        <i class="fa-solid fa-headset"></i>
+      </div>
+      <h3>Real Support</h3>
+      <p>Talk to a human. We reply within 2 hours, every day.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon-wrap">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h3>Safe &amp; Secure</h3>
+      <p>256-bit encryption on every transaction. Your data is yours.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-wrap">
+  <div class="stats-row">
+    <div class="stat-block">
+      <span class="stat-num" data-target="500">0</span><span class="stat-suffix">+</span>
+      <span class="stat-lbl">Products</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <span class="stat-num" data-target="12000">0</span><span class="stat-suffix">+</span>
+      <span class="stat-lbl">Customers</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <span class="stat-num" data-target="48">0</span><span class="stat-suffix">h</span>
+      <span class="stat-lbl">Delivery</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <span class="stat-num" data-target="4.9">0</span><span class="stat-suffix"></span>
+      <span class="stat-lbl">Rating</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const counters = document.querySelectorAll('.stat-num');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseFloat(el.dataset.target);
+      const isFloat = target % 1 !== 0;
+      const duration = 1400;
+      const step = 16;
+      const steps = duration / step;
+      const increment = target / steps;
+      let current = 0;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        el.textContent = isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString();
+      }, step);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => observer.observe(c));
+
+  const staggerCards = document.querySelectorAll('.stagger-grid .pcard');
+  const cardObserver = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        cardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  staggerCards.forEach(c => cardObserver.observe(c));
+</script>
+
+{% endblock %}

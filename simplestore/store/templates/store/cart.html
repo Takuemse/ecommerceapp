@@ -1,0 +1,90 @@
+{% extends 'store/base.html' %}
+{% block title %}Cart — SimpleStore{% endblock %}
+
+{% block content %}
+
+<section class="section-wrap">
+  <div class="section-label">Your Selection</div>
+  <h1 class="section-title">Shopping Cart</h1>
+
+  {% if cart_items %}
+  <div class="cart-shell">
+
+    <div class="cart-list">
+      {% for item in cart_items %}
+      <div class="cart-card">
+        {% if item.product.image_url %}
+        <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}" class="cart-card-img"/>
+        {% endif %}
+        <div class="cart-card-info">
+          <p class="cart-card-name">{{ item.product.name }}</p>
+          <p class="cart-card-meta">
+            <i class="fa-solid fa-tag"></i> ${{ item.product.price }} each
+          </p>
+          <div class="cart-card-qty">
+            <i class="fa-solid fa-layer-group"></i>
+            Qty: <strong>{{ item.quantity }}</strong>
+          </div>
+        </div>
+        <div class="cart-card-right">
+          <p class="cart-card-sub">${{ item.subtotal }}</p>
+          <a href="{% url 'remove_from_cart' item.product.id %}" class="cart-remove-btn">
+            <i class="fa-solid fa-trash-can"></i> Remove
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <aside class="cart-aside">
+      <div class="aside-inner">
+        <p class="aside-title">Order Summary</p>
+        <div class="aside-rows">
+          <div class="aside-row">
+            <span><i class="fa-solid fa-boxes-stacked"></i> Items ({{ item_count }})</span>
+            <span>${{ total }}</span>
+          </div>
+          <div class="aside-row">
+            <span><i class="fa-solid fa-truck"></i> Shipping</span>
+            <span class="aside-free">Free</span>
+          </div>
+          <div class="aside-row">
+            <span><i class="fa-solid fa-percent"></i> Tax</span>
+            <span>Included</span>
+          </div>
+        </div>
+        <div class="aside-total-row">
+          <span>Total</span>
+          <span class="aside-total-price">${{ total }}</span>
+        </div>
+        <a href="{% url 'order_form' %}" class="cta-primary cta-full">
+          Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a href="{% url 'product_list' %}" class="cta-ghost cta-full">
+          <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+        </a>
+        <div class="aside-secure">
+          <i class="fa-solid fa-lock"></i>
+          <span>Secure 256-bit encrypted checkout</span>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  {% else %}
+
+  <div class="empty-state">
+    <div class="empty-icon-wrap">
+      <i class="fa-solid fa-bag-shopping"></i>
+    </div>
+    <h2>Your cart is empty</h2>
+    <p>Looks like you haven't added anything yet.</p>
+    <a href="{% url 'product_list' %}" class="cta-primary">Browse Products</a>
+  </div>
+
+  {% endif %}
+
+</section>
+
+{% endblock %}

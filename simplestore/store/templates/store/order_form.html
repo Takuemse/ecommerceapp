@@ -1,0 +1,133 @@
+{% extends 'store/base.html' %}
+{% block title %}Checkout — SimpleStore{% endblock %}
+
+{% block content %}
+
+<section class="section-wrap checkout-section">
+
+  <div class="checkout-progress">
+    <div class="prog-step done">
+      <div class="prog-dot"><i class="fa-solid fa-check"></i></div>
+      <span>Cart</span>
+    </div>
+    <div class="prog-line filled"></div>
+    <div class="prog-step active">
+      <div class="prog-dot"><i class="fa-solid fa-map-pin"></i></div>
+      <span>Details</span>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step">
+      <div class="prog-dot"><i class="fa-solid fa-circle-check"></i></div>
+      <span>Confirm</span>
+    </div>
+  </div>
+
+  <div class="checkout-grid">
+
+    <div class="checkout-form-col">
+      <div class="section-label">Step 2 of 3</div>
+      <h1 class="section-title">Delivery Details</h1>
+      <p class="checkout-sub">We need a few details to get your order to you.</p>
+
+      <form method="POST" class="checkout-form" id="orderForm">
+        {% csrf_token %}
+
+        <div class="field-row">
+          <div class="field-block" id="field-name">
+            <label class="field-lbl">
+              <i class="fa-solid fa-user"></i> Full Name
+            </label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <span class="field-err">{{ form.name.errors.as_text }}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-block" id="field-phone">
+            <label class="field-lbl">
+              <i class="fa-solid fa-phone"></i> Phone Number
+            </label>
+            {{ form.phone }}
+            {% if form.phone.errors %}
+            <span class="field-err">{{ form.phone.errors.as_text }}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-block" id="field-address">
+            <label class="field-lbl">
+              <i class="fa-solid fa-location-dot"></i> Delivery Address
+            </label>
+            {{ form.address }}
+            {% if form.address.errors %}
+            <span class="field-err">{{ form.address.errors.as_text }}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="cta-primary cta-full submit-btn" id="submitBtn">
+          <span class="btn-text">Place Order</span>
+          <i class="fa-solid fa-arrow-right btn-icon"></i>
+          <span class="btn-loading" style="display:none;">
+            <i class="fa-solid fa-spinner fa-spin"></i> Placing order...
+          </span>
+        </button>
+
+      </form>
+    </div>
+
+    <aside class="checkout-aside-col">
+      <div class="checkout-aside-card">
+        <p class="aside-title">
+          <i class="fa-solid fa-shield-halved"></i> Safe to order
+        </p>
+        <ul class="checkout-guarantees">
+          <li><i class="fa-solid fa-check"></i> 30-day free returns</li>
+          <li><i class="fa-solid fa-check"></i> Delivery within 48 hours</li>
+          <li><i class="fa-solid fa-check"></i> We call to confirm your order</li>
+          <li><i class="fa-solid fa-check"></i> No payment details required</li>
+        </ul>
+        <div class="checkout-trust-badges">
+          <div class="trust-badge">
+            <i class="fa-solid fa-lock"></i>
+            <span>Encrypted</span>
+          </div>
+          <div class="trust-badge">
+            <i class="fa-solid fa-star"></i>
+            <span>Top Rated</span>
+          </div>
+          <div class="trust-badge">
+            <i class="fa-solid fa-handshake"></i>
+            <span>Trusted</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+</section>
+
+<script>
+  document.querySelectorAll('.field-input').forEach(input => {
+    input.addEventListener('focus', () => {
+      input.closest('.field-block').classList.add('focused');
+    });
+    input.addEventListener('blur', () => {
+      input.closest('.field-block').classList.remove('focused');
+    });
+  });
+
+  document.getElementById('orderForm').addEventListener('submit', function() {
+    const btn = document.getElementById('submitBtn');
+    btn.querySelector('.btn-text').style.display = 'none';
+    btn.querySelector('.btn-icon').style.display = 'none';
+    btn.querySelector('.btn-loading').style.display = 'inline';
+    btn.disabled = true;
+  });
+</script>
+
+{% endblock %}
